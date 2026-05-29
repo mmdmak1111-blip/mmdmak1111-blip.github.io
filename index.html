@@ -1,74 +1,32 @@
-<!DOCTYPE html><html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zest Chat</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
-<body><div class="chat-container">
-  <h1>Zest Chat 💬</h1>  <div class="login-box">
-    <input type="text" id="username" placeholder="اسم خودتو وارد کن">
-  </div>  <div id="chat-box" class="chat-box"></div>  <div class="send-box">
+<body>
+
+<div class="chat-container">
+
+  <h1>Zest Chat 💬</h1>
+
+  <div class="send-box">
+    <input type="text" id="username" placeholder="اسم">
+  </div>
+
+  <div id="chat-box" class="chat-box"></div>
+
+  <div class="send-box">
     <input type="text" id="message" placeholder="پیام بنویس...">
     <button onclick="sendMessage()">ارسال</button>
   </div>
-</div><script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "YOUR_APP_ID"
-  };
+</div>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+<script src="script.js"></script>
 
-  const chatBox = document.getElementById("chat-box");
-
-  window.sendMessage = async function () {
-    const username = document.getElementById("username").value;
-    const message = document.getElementById("message").value;
-
-    if (!username || !message) return;
-
-    await addDoc(collection(db, "messages"), {
-      username,
-      message,
-      time: Date.now()
-    });
-
-    document.getElementById("message").value = "";
-  }
-
-  const q = query(collection(db, "messages"), orderBy("time"));
-
-  onSnapshot(q, (snapshot) => {
-    chatBox.innerHTML = "";
-
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-
-      chatBox.innerHTML += `
-        <div class="message">
-          <strong>${data.username}</strong>
-          <p>${data.message}</p>
-        </div>
-      `;
-    });
-
-    chatBox.scrollTop = chatBox.scrollHeight;
-  });
-</script></body>
+</body>
 </html>

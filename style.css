@@ -5,110 +5,69 @@
 }
 
 body {
+  background: #0f0f0f;
+  color: white;
   font-family: Tahoma, sans-serif;
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  color: white;
-}
-
-nav {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-}
-
-.logo {
-  color: #00bfff;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: white;
-  transition: 0.3s;
-}
-
-nav a:hover {
-  color: #00bfff;
-}
-
-.hero {
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  height: 100vh;
+}
+
+.chat-container {
+  width: 90%;
+  max-width: 700px;
+  background: #1a1a1a;
+  border-radius: 20px;
   padding: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-.hero h1 {
-  font-size: 60px;
+h1 {
+  text-align: center;
   margin-bottom: 20px;
+  color: #00bfff;
 }
 
-.hero p {
-  font-size: 22px;
-  opacity: 0.8;
+.chat-box {
+  height: 400px;
+  overflow-y: auto;
+  background: #111;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.message {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.message strong {
+  color: #00bfff;
+}
+
+.send-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2a2a2a;
+  color: white;
 }
 
 button {
-  margin-top: 30px;
-  padding: 14px 30px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #00bfff;
   color: white;
-  font-size: 18px;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.08);
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  padding: 60px;
-}
-
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 30px;
-  border-radius: 20px;
-  backdrop-filter: blur(5px);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-}
-
-.card h3 {
-  margin-bottom: 15px;
-  color: #00bfff;
-}
-
-.contact {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  background: rgba(255,255,255,0.05);
-  margin-top: 40px;
 }

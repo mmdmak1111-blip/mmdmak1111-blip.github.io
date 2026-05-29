@@ -2,38 +2,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MMD Zest</title>
+  <title>Zest Chat</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>  <nav>
-    <h2 class="logo">MMD Zest</h2>
-    <ul>
-      <li><a href="#home">خانه</a></li>
-      <li><a href="#about">درباره</a></li>
-      <li><a href="#contact">ارتباط</a></li>
-    </ul>
-  </nav>  <section class="hero" id="home">
-    <h1>به سایت من خوش اومدی 🚀</h1>
-    <p>یک سایت خفن ساخته شده با HTML CSS و JavaScript</p>
-    <button onclick="showMessage()">شروع</button>
-  </section>  <section class="cards" id="about">
-    <div class="card">
-      <h3>سرعت بالا ⚡</h3>
-      <p>سایت سبک و سریع اجرا میشه.</p>
-    </div><div class="card">
-  <h3>طراحی مدرن 🎨</h3>
-  <p>ظاهر دارک و حرفه‌ای.</p>
-</div>
+<body><div class="chat-container">
+  <h1>Zest Chat 💬</h1>  <div class="login-box">
+    <input type="text" id="username" placeholder="اسم خودتو وارد کن">
+  </div>  <div id="chat-box" class="chat-box"></div>  <div class="send-box">
+    <input type="text" id="message" placeholder="پیام بنویس...">
+    <button onclick="sendMessage()">ارسال</button>
+  </div>
+</div><script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<div class="card">
-  <h3>قابل توسعه 🛠️</h3>
-  <p>بعداً میتونی هر چیزی بهش اضافه کنی.</p>
-</div>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "YOUR_APP_ID"
+  };
 
-  </section>  <section class="contact" id="contact">
-    <h2>ارتباط با من</h2>
-    <p>example@email.com</p>
-  </section>  <footer>
-    <p>© 2026 MMD Zest</p>
-  </footer>  <script src="script.js"></script></body>
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const chatBox = document.getElementById("chat-box");
+
+  window.sendMessage = async function () {
+    const username = document.getElementById("username").value;
+    const message = document.getElementById("message").value;
+
+    if (!username || !message) return;
+
+    await addDoc(collection(db, "messages"), {
+      username,
+      message,
+      time: Date.now()
+    });
+
+    document.getElementById("message").value = "";
+  }
+
+  const q = query(collection(db, "messages"), orderBy("time"));
+
+  onSnapshot(q, (snapshot) => {
+    chatBox.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+
+      chatBox.innerHTML += `
+        <div class="message">
+          <strong>${data.username}</strong>
+          <p>${data.message}</p>
+        </div>
+      `;
+    });
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+</script></body>
 </html>
